@@ -254,33 +254,38 @@ public class Main {
 		report.setNameFile("reporte");
 		report.setExtension("txt");
 		report.setTitle(":: VISTOS ::");
-		String contentReport = "";
+		StringBuilder contentReport = new StringBuilder();
 
-		for (Movie movie : movies) {
-			if (movie.getIsViewed()) {
-				contentReport += movie.toString() + "\n";
-
-			}
-		}
+		movies.stream()
+		.filter(m->m.getIsViewed())
+		.forEach(m->contentReport.append( m.toString()+"\n"));
+//		for (Movie movie : movies) {
+//			if (movie.getIsViewed()) {
+//				contentReport += movie.toString() + "\n";
+//
+//			}
+//		}
 
 		for (Serie serie : series) {
 			ArrayList<Chapter> chapters = serie.getChapters();
 			for (Chapter chapter : chapters) {
 				if (chapter.getIsViewed()) {
-					contentReport += chapter.toString() + "\n";
+					contentReport.append( chapter.toString() + "\n");
 
 				}
 			}
 		}
+		books.stream()
+		.filter(m->m.getIsReaded())
+		.forEach(m->contentReport.append( m.toString()+"\n"));
+//		for (Book book : books) {
+//			if (book.getIsReaded()) {
+//				contentReport.append( book.toString() + "\n");
+//
+//			}
+//		}
 
-		for (Book book : books) {
-			if (book.getIsReaded()) {
-				contentReport += book.toString() + "\n";
-
-			}
-		}
-
-		report.setContent(contentReport);
+		report.setContent(contentReport.toString());
 		report.makeReport();
 		System.out.println("Reporte Generado");
 		System.out.println();
